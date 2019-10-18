@@ -6,7 +6,7 @@ import sys
 from os import listdir
 from os.path import isfile, join, splitext, isdir
 
-sys.path.append("C:\Python27\Lib\lib-tk")
+sys.path.append(r"C:\Python27\Lib\lib-tk")
 
 # Note: 3DS Max runs into problems with importing Tkinter. The tcl8.5 and tk8.5 directories need to be moved into the
 # program folder for 3DS Max
@@ -16,7 +16,7 @@ import tkMessageBox
 
 
 # Load and configure importer plugins
-def configureImporters():
+def configure_importers():
     # CONFIGURE IMPORTER
     # TODO: Configure importers based on file type? Could account for possibility of variety of files
     # Convert to mesh
@@ -37,7 +37,7 @@ def configureImporters():
 
 
 # Filter out the files we don't want to import, import the ones that we do want
-def filterFiles(path, subdirectories, text):
+def filter_files(path, subdirectories, text):
     for item in listdir(path):  # list all items in import directory
         subpath = join(path, item)  # get the absolute path of that item
 
@@ -62,17 +62,17 @@ def filterFiles(path, subdirectories, text):
 
 
 # Traverse any subdirectories in the import directory to find other files to convert
-def traverseSubdirectories(subdirectories, text):
+def traverse_subdirectories(subdirectories, text):
     # Were there subdirectories?
     if subdirectories:
         for directory in subdirectories:
-            filterFiles(directory, subdirectories, text)
+            filter_files(directory, subdirectories, text)
 
     return
 
 
 # Export the files to FBX format
-def exportFiles(pathOut, text):
+def export_files(path_out, text):
 
     # NOTE: 3DS Max ran into problems when trying to evaluate using the full parameter path
     # (e.g., MaxPlus.Core.EvalMAXScript("FbxExporterSetParam #Export|IncludeGrp|LightGrp|Light False")
@@ -109,7 +109,7 @@ def exportFiles(pathOut, text):
         selector.SelectNode(part)
 
         name = part.GetName()
-        path = pathOut + "/" + name
+        path = path_out + "/" + name
 
         text.write(name + "\n")
         start = time.time()
@@ -119,26 +119,21 @@ def exportFiles(pathOut, text):
     return
 
 
-def userSelect(prompt):
+def user_select(prompt):
     root = Tkinter.Tk()
     root.withdraw()  # hide root window
 
-    flag = True
-
-    while(flag):
+    while(True):
         folder = tkFileDialog.askdirectory(parent=root, initialdir="/", title=prompt)
 
         # user picked a valid folder
         if len(folder) > 0:
             print(folder)
-            flag = False
-
         # user did not pick a valid folder and chose to cancel or X out of the window
         else:
             tkMessageBox.showinfo("Attention", "You have chosen to quit the program.")
-            flag = False
 
-    return folder
+        return folder
 
 
 # Global variables
@@ -150,11 +145,11 @@ exportLog = open('export log.txt', 'w')
 
 sys.path.append("C://Python27")
 
-importPath = userSelect('Select the folder of files to import.')
+importPath = user_select('Select the folder of files to import.')
 
 # user chose valid import directory
 if(importPath):
-    exportPath = userSelect('Select the folder to send the exports.')
+    exportPath = user_select('Select the folder to send the exports.')
 
     # user chose valid export directory
     if(exportPath):
@@ -175,13 +170,13 @@ if(importPath):
         viewManager.GetActiveViewport()
         viewManager.DisableSceneRedraw()
 
-        configureImporters()
+        configure_importers()
 
-        filterFiles(importPath, directories, importLog)
+        filter_files(importPath, directories, importLog)
 
-        traverseSubdirectories(directories, importLog)
+        traverse_subdirectories(directories, importLog)
 
-        exportFiles(getExport, exportLog)
+        export_files(getExport, exportLog)
 
         # re-enable rendering of items in display port
         viewManager.EnableSceneRedraw()

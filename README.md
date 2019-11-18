@@ -6,10 +6,15 @@ To use this script, 3DS Max must be installed. As noted in the code, 3DS Max has
 
 ## How to run the code
 To run the script, do the following:
-1. Open the MAXScript Listener window in 3DS Max. 
-2. Switch from the MaxPlus language to Python. 
+1. Open the MAXScript Listener window in 3DS Max.
+![Step 1](https://user-images.githubusercontent.com/14677252/69062584-2752f700-09e9-11ea-934b-ae691d4cfc3f.png)
+2. Switch from the MaxPlus language to Python.
+![Step 2](https://user-images.githubusercontent.com/14677252/69062617-3174f580-09e9-11ea-901c-c90b66f7db74.png)
 3. Load the .py script file and run it from the MAXScript Listener window.
+![Step 3a](https://user-images.githubusercontent.com/14677252/69062627-3639a980-09e9-11ea-94d6-75ff8b590898.png)
+![Step 3b](https://user-images.githubusercontent.com/14677252/69062635-3a65c700-09e9-11ea-89a7-8252c2cff3aa.png)
 4. Follow any prompts that pop up.
+![Step 4](https://user-images.githubusercontent.com/14677252/69062648-3e91e480-09e9-11ea-860d-fd872df1bf38.png)
 
 ## Troubleshooting
 If you receive an error saying that there is a version conflict for either the Tcl or the Tk package, go into the tcl8.5 and tk8.5 directories you copied over in the [Preparation section](#preparation) above.
